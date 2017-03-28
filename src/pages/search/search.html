@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title style="float:left;margin-top: 10px;" (click)="refresh()">SEARCH</ion-title>
+    <!-- <label ion-button style="float:right;height:2em;padding:0;">
+      <ion-select [ngModel]="lang" name="language" style="max-width:100%;" (ngModelChange)="setOption($event)">
+        <ion-option value="ua">UA</ion-option>
+        <ion-option value="en">EN</ion-option>
+        <ion-option value="ru">RU</ion-option>
+      </ion-select>
+    </label> -->
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-list>
+    <ion-item>
+        <label item-left>Upload image</label>
+        <ion-icon item-left (click)="chooseImage()" name="cloud-upload"></ion-icon>
+          <ion-icon *ngIf="plantType == 'flower'" name="flower" (click)="choosePlantType()"></ion-icon>
+          <ion-icon *ngIf="plantType == 'fruit'" name="logo-apple" (click)="choosePlantType()"></ion-icon>
+          <ion-icon *ngIf="plantType == 'leaf'" name="leaf" (click)="choosePlantType()"></ion-icon>
+        <label item-right>Try to recognize</label>
+        <ion-icon name="bulb" (click)="uploadPhoto()" item-right></ion-icon>
+
+    </ion-item>
+    <ion-item *ngIf="imageChosen == 1">
+      <ion-thumbnail>
+      <!-- <div *ngIf="imageChosen == 1" class="img-preview"> -->
+        <img [src]="imagePath" alt="" style="display:block; margin: auto;">
+      <!-- </div> -->
+      </ion-thumbnail>
+    </ion-item>
+    <ion-item *ngFor="let item of items">
+      <ion-thumbnail item-left>
+        <img src="assets/images/{{item.photoSource}}">
+      </ion-thumbnail>
+      <h2>{{item.name[lang]}}</h2>
+      <button ion-button clear item-right (click)="viewItem(item)">View</button>
+    </ion-item>
+  </ion-list>
+  <ion-card *ngIf="wikiImgs.length">
+    <ion-card-header>
+    Take Wiki Info
+    </ion-card-header>
+    <button ion-button clear item-right (click)="refresh()">CANCEL</button>
+    <ion-list>
+      <ion-item *ngFor="let img of wikiImgs">
+        <a href="{{'https://en.wikipedia.org/wiki/'+img.title}}" target="_blank">
+          <ion-thumbnail item-left>
+            <img *ngIf="img.source" [src]="img.source">
+          </ion-thumbnail>
+          <h2>{{img.title}}</h2>
+        </a>
+        <!-- <button ion-button clear item-right (click)="viewItem(item)">View</button> -->
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <pre>{{lang | json}}</pre>
+</ion-content>

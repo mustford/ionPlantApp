@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title style="float:left;margin-top: 10px;" (click)="refresh()">SETTINGS</ion-title>
+    <label ion-button style="float:right;height:2em;padding:0;">
+      <ion-select [ngModel]="lang" name="language" style="max-width:100%;" (ngModelChange)="setOption($event)">
+        <ion-option value="ua">UA</ion-option>
+        <ion-option value="en">EN</ion-option>
+        <ion-option value="ru">RU</ion-option>
+      </ion-select>
+    </label>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <p class="page-header">APPEARANCE</p>
+    </ion-item>
+    <ion-item>
+      <p class="page-header">ABOUT</p>
+    </ion-item>
+    <ion-item>
+      <p class="page-header">LEGAL INFORMATION</p>
+    </ion-item>
+  </ion-list>
+</ion-content>

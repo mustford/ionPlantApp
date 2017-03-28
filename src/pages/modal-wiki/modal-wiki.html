@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Description
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android, windows">Cancel</ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let img of imgArray">
+      <a href="{{'https://en.wikipedia.org/wiki/'+img.title}}" target="_blank">
+        <ion-thumbnail item-left>
+          <img *ngIf="img.source" [src]="img.source">
+        </ion-thumbnail>
+        <h2>{{img.title}}</h2>
+      </a>
+      <!-- <button ion-button clear item-right (click)="viewItem(item)">View</button> -->
+    </ion-item>
+  </ion-list>
+</ion-content>
