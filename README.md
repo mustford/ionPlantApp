@@ -29,6 +29,10 @@ Plant recognition is performed by service of Pl@ntNet (http://identify.plantnet-
     ionic plugin add cordova-plugin-file-transfer
 
     ionic plugin add cordova-plugin-camera
+    
+    ionic plugin add cordova-plugin-geolocation
+
+    ionic plugin add cordova-plugin-network-information
 
 **6. Launch virtual device:** 
 
