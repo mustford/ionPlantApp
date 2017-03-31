@@ -5,6 +5,8 @@ import { File, Camera, Transfer } from 'ionic-native';
 import { DetailsPage } from '../details/details'
 import { ConfigService } from '../../providers/config-service';
 import { ModalWikiPage } from '../modal-wiki/modal-wiki';
+import { ModalImgPage } from '../modal-img/modal-img';
+
 
 declare var cordova: any;
 
@@ -25,6 +27,7 @@ export class SearchPage {
     lang: string;
     plantType: string;
     wikiImgs: any;
+    exifInfo: any;
   constructor(public navCtrl: NavController,
               private postservice: PostService,
               public actionSheet: ActionSheetController,
@@ -176,6 +179,13 @@ uploadPhoto() {
           }
         },
         {
+          text: 'Return EXIF only',
+          icon: 'albums',
+          handler: () => {
+            this.actionHandler(3);
+          }
+        },
+        {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
@@ -205,6 +215,17 @@ uploadPhoto() {
         // targetHeight: 500,
         saveToPhotoAlbum: false
       };
+    } else if (selection == 3) {
+      options = {
+        quality: 50,
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+        // allowEdit: false,
+        encodingType: Camera.EncodingType.JPEG,
+        // targetWidth: 500,
+        // targetHeight: 500,
+        // saveToPhotoAlbum: false
+      };
     } else {
       options = {
         quality: 75,
@@ -219,7 +240,9 @@ uploadPhoto() {
     }
 
     Camera.getPicture(options).then((imgUrl) => {
-
+      if (selection == 3) {
+        this.exifInfo = JSON.stringify(imgUrl);
+      }
       let sourceDirectory = imgUrl.substring(0, imgUrl.lastIndexOf('/') + 1);
       let sourceFileName = imgUrl.substring(imgUrl.lastIndexOf('/') + 1, imgUrl.length);
       sourceFileName = sourceFileName.split('?').shift();
@@ -280,6 +303,12 @@ uploadPhoto() {
   openModal(array) {
 
     let modal = this.modalCtrl.create(ModalWikiPage, array);
+    modal.present();
+  }
+
+  openImgModal(imgUrl) {
+    console.log(imgUrl);
+    let modal = this.modalCtrl.create(ModalImgPage, imgUrl);
     modal.present();
   }
 
